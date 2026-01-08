@@ -5,7 +5,7 @@
 A full-stack application built for managing Pokemon, creating teams, and simulating battles with type-advantage logic.
 
 ## 🚀 Features
-*Pokemon Management*: View and update the list of favorite Pokemons and their stats.
+**Pokemon Management*: View and update the list of favorite Pokemons and their stats.
 *Team Building*: Create teams consisting of exactly six Pokemons (duplicates allowed).
 *Battle Simulation*: Visual 1vs1 battle simulation between two teams with round-by-round navigation.
 *Dynamic Ranking*: List teams ordered by the total power of their members.
