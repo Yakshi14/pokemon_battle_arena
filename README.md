@@ -50,3 +50,4 @@ This includes the insert_pokemon_team and get_list_pokemon_teams functions.
    ```env
    SUPABASE_URL=your_project_url
    SUPABASE_KEY=your_anon_key
+### Output
