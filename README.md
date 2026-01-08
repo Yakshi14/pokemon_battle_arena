@@ -10,9 +10,9 @@ A full-stack application built with Angular, Node.js, and Supabase to manage Pok
 remain_life = life - (opponent_power * factor)
 
 *Type Advantage (Factors):*
-- *Fire* deals *2.0x* to Grass, **0.5x* to *Water, and **1.0x* to *Fire*.
-- *Water* deals *2.0x* to *Fire, **0.5x* to *Grass, and **1.0x* to *Water*.
-- *Grass* deals *2.0x* to *Water, **0.5x* to *Fire, and **1.0x* to *Grass*.
+- *Fire* deals *2.0x* to *Grass*, *0.5x* to *Water*, and *1.0x* to *Fire*.
+- *Water* deals *2.0x* to *Fire*, *0.5x* to *Grass*, and *1.0x* to *Water*.
+- *Grass* deals *2.0x* to *Water*, *0.5x* to *Fire*, and *1.0x* to *Grass*.
 
 *Battle Logic:*
 - The match is played 1vs1 until no member of a team is able to fight.
