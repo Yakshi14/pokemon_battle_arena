@@ -2,7 +2,7 @@
 
 # Pokemon Battle Application
 
-A full-stack application built with *Angular, **Node.js, and **Supabase* to manage Pokemon teams and simulate battles.
+A full-stack application built with Angular, Node.js, and Supabase to manage Pokemon teams and simulate battles.
 
 ## ⚔️ Battle Algorithm
 
@@ -10,7 +10,7 @@ A full-stack application built with *Angular, **Node.js, and **Supabase* to mana
 remain_life = life - (opponent_power * factor)
 
 *Type Advantage (Factors):*
-- *Fire* deals *2.0x* to *Grass, **0.5x* to *Water, and **1.0x* to *Fire*.
+- *Fire* deals *2.0x* to Grass, **0.5x* to *Water, and **1.0x* to *Fire*.
 - *Water* deals *2.0x* to *Fire, **0.5x* to *Grass, and **1.0x* to *Water*.
 - *Grass* deals *2.0x* to *Water, **0.5x* to *Fire, and **1.0x* to *Grass*.
 
