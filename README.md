@@ -2,36 +2,54 @@
 
 # Pokemon Battle Application
 
-A full-stack application built for managing Pokemon, creating teams, and simulating battles with type-advantage logic.
-
-## 🚀 Features
-**Pokemon Management*: View and update the list of favorite Pokemons and their stats.
-*Team Building*: Create teams consisting of exactly six Pokemons (duplicates allowed).
-*Battle Simulation*: Visual 1vs1 battle simulation between two teams with round-by-round navigation.
-*Dynamic Ranking*: List teams ordered by the total power of their members.
-
-## 🛠 Tech Stack
-*Frontend*: Angular, TypeScript, HTML/CSS, Bootstrap.
-*Backend*: Node.js.
-*Database*: Supabase (PostgreSQL).
-
-## 📊 Database Schema
-The database uses a relational structure to ensure data integrity:
-*pokemon_type*: Stores element types (Fire, Water, Grass).
-*pokemon*: Stores stats including power (10-100) and life (50-100).
-*weakness*: Stores the damage factor between different types.
-*teams & team_members*: Expanded schema to handle 6-member team compositions.
+A full-stack application built with *Angular, **Node.js, and **Supabase* to manage Pokemon teams and simulate battles.
 
 ## ⚔️ Battle Algorithm
-The simulation follows a 1vs1 match-up until all members of a team are unable to fight.
 
-### Damage Formula
-The health remaining after a round is calculated as:
-$$remain\_life = life - (opponent\_power \times factor)$$ 
+*Damage Formula:*
+remain_life = life - (opponent_power * factor)
 
-*Factor*: Determined by the type-advantage chart (e.g., Water deals 2.0x damage to Fire).
-*Switching*: If a Pokemon's life reaches 0, the next team member enters the battle.
-*Persistence*: Winners move to the next round with their current remaining life.
+*Type Advantage (Factors):*
+- *Fire* deals *2.0x* to *Grass, **0.5x* to *Water, and **1.0x* to *Fire*.
+- *Water* deals *2.0x* to *Fire, **0.5x* to *Grass, and **1.0x* to *Water*.
+- *Grass* deals *2.0x* to *Water, **0.5x* to *Fire, and **1.0x* to *Grass*.
+
+*Battle Logic:*
+- The match is played 1vs1 until no member of a team is able to fight.
+- When a Pokemon's life reaches 0 or less, it is switched out for the next member of the team.
+- The winner of a round moves to the next round with their current remaining life.
+
+---
+
+## 💻 Technical Implementation
+
+*Backend (Node.js):*
+- Handles the connection to Supabase using environmental variables.
+- Provides the API logic to interact with the PostgreSQL database.
+
+*Frontend (Angular & Bootstrap):*
+- Built using Angular and styled with Bootstrap for a responsive UI.
+- Features a visual "VS" screen with health bars and navigation buttons (Next/Previous).
+
+---
+
+## 📊 Data Structure (SK)
+
+The database is organized into the following relational structure:
+
+*pokemon_type*
+Stores elemental types: id and name.
+
+*pokemon*
+Stores stats: id, name, type, image, power (10-100), and life (50-100).
+
+*weakness*
+Stores the damage chart: id, type1, type2, and factor.
+
+*teams & team_members*
+Expanded schema to handle teams of exactly 6 Pokemons, allowing for duplicate Pokemons.
+
+---
 
 ## ⚙️ Setup Instructions
 
@@ -50,4 +68,21 @@ This includes the insert_pokemon_team and get_list_pokemon_teams functions.
    ```env
    SUPABASE_URL=your_project_url
    SUPABASE_KEY=your_anon_key
-### Output
+
+### 3. Frontend
+1. Navigate to /frontend.
+2. Run npm install.
+3. Start the application with ng serve --open.
+
+---
+
+## 🛡️ Design Explanation
+
+*Data Schema Choice:*
+A relational schema was chosen to enforce data integrity, specifically for the power and life constraints required by the challenge.
+
+*Algorithm Choice:*
+The round-based algorithm was implemented to provide a clear step-by-step simulation as shown in the requirement examples.
+   
+## Output
+[Link](https://drive.google.com/file/d/1PIApZy5It3T0RvOGe4oybgIfCaSp4NlH/view?usp=sharing)
