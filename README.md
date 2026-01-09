@@ -33,20 +33,20 @@ remain_life = life - (opponent_power * factor)
 
 ---
 
-## 📊 Data Structure (SK)
+## 📊 Data Structure 
 
 The database is organized into the following relational structure:
 
 *pokemon_type*
-Stores elemental types: id and name.
+Stores: elemental types: id and name.
 
 *pokemon*
 Stores stats: id, name, type, image, power (10-100), and life (50-100).
 
 *weakness*
-Stores the damage chart: id, type1, type2, and factor.
+Stores: the damage chart: id, type1, type2, and factor.
 
-*teams & team_members*
+*teams & team_members*:
 Expanded schema to handle teams of exactly 6 Pokemons, allowing for duplicate Pokemons.
 
 ---
