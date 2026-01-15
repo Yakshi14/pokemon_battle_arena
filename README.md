@@ -2,7 +2,7 @@
 
 # Pokemon Battle Application
 
-A full-stack application built with Angular, Node.js, and Supabase to manage Pokemon teams and simulate battles.
+A full-stack application built with Angular, Node.js/Python and Supabase to manage Pokemon teams and simulate battles.
 
 ## ⚔️ Battle Algorithm
 
@@ -23,13 +23,23 @@ remain_life = life - (opponent_power * factor)
 
 ## 💻 Technical Implementation
 
+*Backend (Python - FastAPI):*
+- Replaces Node.js with a Python-based FastAPI server for high-performance API routing.
+- Uses CORS middleware to securely connect the Angular frontend (Port 4200) to the Python API (Port 8000).
+- Implements the Battle Algorithm as a server-side POST request to ensure calculation integrity.
+- Connects to Supabase using the supabase-py client library.
+
 *Backend (Node.js):*
 - Handles the connection to Supabase using environmental variables.
 - Provides the API logic to interact with the PostgreSQL database.
 
-*Frontend (Angular & Bootstrap):*
+*Frontend (Angular & Bootstrap) FOR Connection to Node.js Backend:*
 - Built using Angular and styled with Bootstrap for a responsive UI.
 - Features a visual "VS" screen with health bars and navigation buttons (Next/Previous).
+
+*Frontend (Angular & Bootstrap) FOR Connection to python Backend :*
+- Built using Angular and styled with Bootstrap for a responsive UI.
+- Communicates with the Python backend via pokemon.service.ts using Angular's HttpClient.
 
 ---
 
@@ -61,7 +71,7 @@ Run the provided PostgreSQL scripts in the Supabase SQL Editor:
 Execute database/schema.sql to create tables and functions.
 This includes the insert_pokemon_team and get_list_pokemon_teams functions.
 
-### 2. Backend Setup
+### 2(Option-A). Backend Setup(Node.js)
 1. Navigate to /backend.
 2. Install dependencies: npm install.
 3. Create a .env file with your credentials:
@@ -69,10 +79,24 @@ This includes the insert_pokemon_team and get_list_pokemon_teams functions.
    SUPABASE_URL=your_project_url
    SUPABASE_KEY=your_anon_key
 
+### 2(Option-B). Backend Setup(Python)
+1. Navigate to the /backend directory.
+2. Create a virtual environment: python -m venv venv.
+3. Activate the virtual environment:
+          Windows: venv\Scripts\activate
+          Mac/Linux: source venv/bin/activate
+4. Install dependencies: pip install -r requirements.txt. 
+5. Create a .env file with your credentials:
+   ```env
+   SUPABASE_URL=your_project_url
+   SUPABASE_KEY=your_anon_key
+6. start the server: python -m uvicorn main:app --reload.
+
 ### 3. Frontend
 1. Navigate to /frontend.
 2. Run npm install.
 3. Start the application with ng serve --open.
+4. Open the UI at http://localhost:4200.
 
 ---
 
