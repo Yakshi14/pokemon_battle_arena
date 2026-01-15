@@ -2,9 +2,10 @@
 
 [![Angular](https://img.shields.io/badge/Frontend-Angular-dd0031?style=for-the-badge&logo=angular)](https://angular.io/)
 [![FastAPI](https://img.shields.io/badge/Backend-FastAPI-009688?style=for-the-badge&logo=fastapi)](https://fastapi.tiangolo.com/)
+[![Node.js](https://img.shields.io/badge/Backend-Node.js-339933?style=for-the-badge&logo=nodedotjs)](https://nodejs.org/)
 [![Supabase](https://img.shields.io/badge/Database-Supabase-3ecf8e?style=for-the-badge&logo=supabase)](https://supabase.com/)
 
-A high-performance, full-stack application designed to manage Pokémon teams and simulate elemental battles with real-time stat updates.
+A full-stack application built to manage Pokémon teams and simulate elemental battles. The project demonstrates a clean separation of concerns, a robust relational database schema, and a cross-platform backend implementation.
 
 ---
 
@@ -25,94 +26,76 @@ $$remain\_life = life - (opponent\_power \times factor)$$
 | **Grass** 🌿 | Water 💧 | **2.0x** (Super Effective) |
 | **Grass** 🌿 | Fire 🔥 | **0.5x** (Not Effective) |
 
-> **Battle Logic:** Matches are 1vs1. When a Pokémon's life drops to $\le 0$, the next team member (out of 6) is automatically tagged in. The winner retains their current life for the next round.
+> **Battle Logic:** Matches are played 1vs1 until no member of a team is able to fight. When a Pokémon's life reaches 0 or less, it is switched out for the next member. Winners retain their current life for the next round.
 
 ---
 
-## 🛠️ Technical Architecture
+## 🛠️ Technical Implementation
 
-### 🐍 Backend (Python - FastAPI) - *Current Focus*
-* **CORS Integration:** Bridge established between Port 4200 (Angular) and Port 8000 (Python).
-* **Security:** Calculation integrity is maintained by processing battle logic server-side via POST requests.
-* **Database Client:** Uses `supabase-py` for asynchronous interaction with PostgreSQL.
+### 🐍 Backend (Python - FastAPI)
+* **CORS Integration:** Established to securely connect Angular (Port 4200) to the Python API (Port 8000).
+* **Integrity:** Processes battle logic server-side via POST requests to ensure calculation accuracy.
+* **Client:** Uses `supabase-py` for asynchronous interaction with the PostgreSQL database.
+
+### 🟢 Backend (Node.js)
+* **Environment:** Handles Supabase connections using secure `.env` variables.
+* **API Logic:** Provides a RESTful interface to interact with the database tables and functions.
 
 ### 🅰️ Frontend (Angular & Bootstrap)
-* **Reactive UI:** Visual "VS" arena with real-time health bar animations.
-* **Data Flow:** Communicates via `pokemon.service.ts` using Angular’s `HttpClient`.
+* **Responsive UI:** Visual "VS" screen with real-time health bars and round-by-round navigation.
+* **Services:** Centralized data fetching via `pokemon.service.ts` using Angular's `HttpClient`.
 
 ---
 
-## 📊 Database Schema
-The system uses a normalized PostgreSQL structure in Supabase:
+## 📊 Data Structure
+The database is organized into a normalized relational structure:
 
-* **`pokemon_type`**: Defines elemental IDs and labels.
-* **`pokemon`**: Core stats (Power: $10-100$, Life: $50-100$).
-* **`weakness`**: The relational matrix for damage multipliers.
-* **`teams`**: Stores unique rosters of exactly 6 Pokémon (allows duplicates).
+* **`pokemon_type`**: Stores elemental types (ID and Name).
+* **`pokemon`**: Stores stats (Name, Type, Image, Power 10-100, Life 50-100).
+* **`weakness`**: Stores the damage chart (Type1 vs Type2 Factors).
+* **`teams`**: Expanded schema to handle rosters of exactly 6 Pokémon, supporting duplicate entries.
 
 ---
-
-## 🚀 Setup & Installation
-
-### 1️⃣ Database Setup
-1. Create a project at [Supabase](https://supabase.com/).
-2. Execute `database/schema.sql` in the SQL Editor to generate tables and the `get_teams_by_power` function.
-
-### 2️⃣ Backend (Option Python - Recommended)
-```bash
-cd backend
-python -m venv venv
-# Activate: .\venv\Scripts\activate (Win) or source venv/bin/activate (Mac)
-pip install -r requirements.txt
-# Add SUPABASE_URL and SUPABASE_KEY to .env
-python -m uvicorn main:app --reload
 
 ## ⚙️ Setup Instructions
 
-### Prerequisites
-Create a project on [Supabase](https://supabase.com/).
+### 1️⃣ Database Configuration
+1. Create a project on [Supabase](https://supabase.com/).
+2. Run `database/schema.sql` in the SQL Editor to create tables and functions.
+3. This includes the `insert_pokemon_team` and `get_list_pokemon_teams` functions.
 
-### 1. Database Configuration
-Run the provided PostgreSQL scripts in the Supabase SQL Editor:
-Execute database/schema.sql to create tables and functions.
-This includes the insert_pokemon_team and get_list_pokemon_teams functions.
+### 2️⃣ Backend Setup (Choose ONE)
 
-### 2(Option-A). Backend Setup(Node.js)
-1. Navigate to /backend.
-2. Install dependencies: npm install.
-3. Create a .env file with your credentials:
-   ```env
-   SUPABASE_URL=your_project_url
-   SUPABASE_KEY=your_anon_key
+#### **Option A: Node.js**
+1. Navigate to `/backend`.
+2. Install dependencies: `npm install`.
+3. Create a `.env` file with your `SUPABASE_URL` and `SUPABASE_KEY`.
+4. Start server: `node server.js` (or your specific start command).
 
-### 2(Option-B). Backend Setup(Python)
-1. Navigate to the /backend directory.
-2. Create a virtual environment: python -m venv venv.
-3. Activate the virtual environment:
-          Windows: venv\Scripts\activate
-          Mac/Linux: source venv/bin/activate
-4. Install dependencies: pip install -r requirements.txt. 
-5. Create a .env file with your credentials:
-   ```env
-   SUPABASE_URL=your_project_url
-   SUPABASE_KEY=your_anon_key
-6. start the server: python -m uvicorn main:app --reload.
+#### **Option B: Python (Recommended)**
+1. Navigate to `/backend`.
+2. Create virtual environment: `python -m venv venv`.
+3. Activate:
+   - Windows: `venv\Scripts\activate`
+   - Mac/Linux: `source venv/bin/activate`
+4. Install dependencies: `pip install -r requirements.txt`.
+5. Create a `.env` file with your `SUPABASE_URL` and `SUPABASE_KEY`.
+6. Start server: `python -m uvicorn main:app --reload`.
 
-### 3. Frontend
-1. Navigate to /frontend.
-2. Run npm install.
-3. Start the application with ng serve --open.
-4. Open the UI at http://localhost:4200.
+### 3️⃣ Frontend Setup
+1. Navigate to `/frontend`.
+2. Run `npm install`.
+3. Start application: `ng serve --open`.
+4. Open UI at: `http://localhost:4200`.
 
 ---
 
 ## 🛡️ Design Explanation
 
-*Data Schema Choice:*
-A relational schema was chosen to enforce data integrity, specifically for the power and life constraints required by the challenge.
+* **Data Schema Choice:** A relational schema was chosen to enforce data integrity at the database level, specifically for the power ($10$-$100$) and life ($50$-$100$) constraints required by the challenge.
+* **Algorithm Choice:** The round-based algorithm was implemented to provide a clear, step-by-step simulation as shown in the requirement examples, allowing the user to track battle progression visually.
 
-*Algorithm Choice:*
-The round-based algorithm was implemented to provide a clear step-by-step simulation as shown in the requirement examples.
-   
-## Output
-[Link](https://drive.google.com/file/d/1PIApZy5It3T0RvOGe4oybgIfCaSp4NlH/view?usp=sharing)
+---
+
+## 🎬 Project Output
+[**View Results & Video Demo**](https://drive.google.com/file/d/1PIApZy5It3T0RvOGe4oybgIfCaSp4NlH/view?usp=sharing)
