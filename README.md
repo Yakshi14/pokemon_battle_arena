@@ -33,13 +33,15 @@ remain_life = life - (opponent_power * factor)
 - Handles the connection to Supabase using environmental variables.
 - Provides the API logic to interact with the PostgreSQL database.
 
+
 *Frontend (Angular & Bootstrap) FOR Connection to Node.js Backend:*
 - Built using Angular and styled with Bootstrap for a responsive UI.
 - Features a visual "VS" screen with health bars and navigation buttons (Next/Previous).
 
-*Frontend (Angular & Bootstrap) FOR Connection to python Backend :*
+*Frontend (Angular & Bootstrap) FOR Connection to python Backend:*
 - Built using Angular and styled with Bootstrap for a responsive UI.
 - Communicates with the Python backend via pokemon.service.ts using Angular's HttpClient.
+  
 
 ---
 
