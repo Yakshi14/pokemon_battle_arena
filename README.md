@@ -92,7 +92,7 @@ The database is organized into a normalized relational structure:
 
 ## 🛡️ Design Explanation
 
-* **Data Schema Choice:** A relational schema was chosen to enforce data integrity at the database level, specifically for the power ($10$-$100$) and life ($50$-$100$) constraints required by the challenge.
+* **Data Schema Choice:** A relational schema was chosen to enforce data integrity at the database level, specifically for the power (10-100) and life (50-100) constraints required by the challenge.
 * **Algorithm Choice:** The round-based algorithm was implemented to provide a clear, step-by-step simulation as shown in the requirement examples, allowing the user to track battle progression visually.
 
 ---
