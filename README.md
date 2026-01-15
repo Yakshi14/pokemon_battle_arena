@@ -1,67 +1,71 @@
-# pokemon_battle_arena
+# ⚔️ Pokémon Battle Arena
 
-# Pokemon Battle Application
+[![Angular](https://img.shields.io/badge/Frontend-Angular-dd0031?style=for-the-badge&logo=angular)](https://angular.io/)
+[![FastAPI](https://img.shields.io/badge/Backend-FastAPI-009688?style=for-the-badge&logo=fastapi)](https://fastapi.tiangolo.com/)
+[![Supabase](https://img.shields.io/badge/Database-Supabase-3ecf8e?style=for-the-badge&logo=supabase)](https://supabase.com/)
 
-A full-stack application built with Angular, Node.js/Python and Supabase to manage Pokemon teams and simulate battles.
-
-## ⚔️ Battle Algorithm
-
-*Damage Formula:*
-remain_life = life - (opponent_power * factor)
-
-*Type Advantage (Factors):*
-- *Fire* deals *2.0x* to *Grass*, *0.5x* to *Water*, and *1.0x* to *Fire*.
-- *Water* deals *2.0x* to *Fire*, *0.5x* to *Grass*, and *1.0x* to *Water*.
-- *Grass* deals *2.0x* to *Water*, *0.5x* to *Fire*, and *1.0x* to *Grass*.
-
-*Battle Logic:*
-- The match is played 1vs1 until no member of a team is able to fight.
-- When a Pokemon's life reaches 0 or less, it is switched out for the next member of the team.
-- The winner of a round moves to the next round with their current remaining life.
+A high-performance, full-stack application designed to manage Pokémon teams and simulate elemental battles with real-time stat updates.
 
 ---
 
-## 💻 Technical Implementation
+## 🎮 Battle Engine & Algorithm
 
-*Backend (Python - FastAPI):*
-- Replaces Node.js with a Python-based FastAPI server for high-performance API routing.
-- Uses CORS middleware to securely connect the Angular frontend (Port 4200) to the Python API (Port 8000).
-- Implements the Battle Algorithm as a server-side POST request to ensure calculation integrity.
-- Connects to Supabase using the supabase-py client library.
+The core simulation logic follows a strict mathematical model to determine outcomes based on elemental advantages.
 
-*Backend (Node.js):*
-- Handles the connection to Supabase using environmental variables.
-- Provides the API logic to interact with the PostgreSQL database.
+### 📐 The Damage Formula
+$$remain\_life = life - (opponent\_power \times factor)$$
 
+### 🍎 Elemental Weakness Chart
+| Attacker | Defender | Multiplier (Factor) |
+| :--- | :--- | :--- |
+| **Fire** 🔥 | Grass 🌿 | **2.0x** (Super Effective) |
+| **Fire** 🔥 | Water 💧 | **0.5x** (Not Effective) |
+| **Water** 💧 | Fire 🔥 | **2.0x** (Super Effective) |
+| **Water** 💧 | Grass 🌿 | **0.5x** (Not Effective) |
+| **Grass** 🌿 | Water 💧 | **2.0x** (Super Effective) |
+| **Grass** 🌿 | Fire 🔥 | **0.5x** (Not Effective) |
 
-*Frontend (Angular & Bootstrap) FOR Connection to Node.js Backend:*
-- Built using Angular and styled with Bootstrap for a responsive UI.
-- Features a visual "VS" screen with health bars and navigation buttons (Next/Previous).
-
-*Frontend (Angular & Bootstrap) FOR Connection to python Backend:*
-- Built using Angular and styled with Bootstrap for a responsive UI.
-- Communicates with the Python backend via pokemon.service.ts using Angular's HttpClient.
-  
+> **Battle Logic:** Matches are 1vs1. When a Pokémon's life drops to $\le 0$, the next team member (out of 6) is automatically tagged in. The winner retains their current life for the next round.
 
 ---
 
-## 📊 Data Structure 
+## 🛠️ Technical Architecture
 
-The database is organized into the following relational structure:
+### 🐍 Backend (Python - FastAPI) - *Current Focus*
+* **CORS Integration:** Bridge established between Port 4200 (Angular) and Port 8000 (Python).
+* **Security:** Calculation integrity is maintained by processing battle logic server-side via POST requests.
+* **Database Client:** Uses `supabase-py` for asynchronous interaction with PostgreSQL.
 
-*pokemon_type*
-Stores: elemental types: id and name.
-
-*pokemon*
-Stores stats: id, name, type, image, power (10-100), and life (50-100).
-
-*weakness*
-Stores: the damage chart: id, type1, type2, and factor.
-
-*teams & team_members*:
-Expanded schema to handle teams of exactly 6 Pokemons, allowing for duplicate Pokemons.
+### 🅰️ Frontend (Angular & Bootstrap)
+* **Reactive UI:** Visual "VS" arena with real-time health bar animations.
+* **Data Flow:** Communicates via `pokemon.service.ts` using Angular’s `HttpClient`.
 
 ---
+
+## 📊 Database Schema
+The system uses a normalized PostgreSQL structure in Supabase:
+
+* **`pokemon_type`**: Defines elemental IDs and labels.
+* **`pokemon`**: Core stats (Power: $10-100$, Life: $50-100$).
+* **`weakness`**: The relational matrix for damage multipliers.
+* **`teams`**: Stores unique rosters of exactly 6 Pokémon (allows duplicates).
+
+---
+
+## 🚀 Setup & Installation
+
+### 1️⃣ Database Setup
+1. Create a project at [Supabase](https://supabase.com/).
+2. Execute `database/schema.sql` in the SQL Editor to generate tables and the `get_teams_by_power` function.
+
+### 2️⃣ Backend (Option Python - Recommended)
+```bash
+cd backend
+python -m venv venv
+# Activate: .\venv\Scripts\activate (Win) or source venv/bin/activate (Mac)
+pip install -r requirements.txt
+# Add SUPABASE_URL and SUPABASE_KEY to .env
+python -m uvicorn main:app --reload
 
 ## ⚙️ Setup Instructions
 
